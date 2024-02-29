@@ -24,6 +24,10 @@
         prices = data.reverse();
         labels = timestamps.reverse();
 
+        // si es menor que 768 quiero que sea relación de 1:1 si no 1:2
+        const aspectRatio = window.innerWidth < 768 ? 1 : 2;
+        // const aspectRatio = window.innerWidth < 768 ? 1 : 2;
+
         const ctx = canvasElement.getContext('2d');
 
         if (ctx) {
@@ -51,7 +55,7 @@
                 },
                 options: {
                     responsive: true,
-                    aspectRatio: 2,
+                    aspectRatio: aspectRatio,
                     // maintainAspectRatio: false,
                     interaction: {
                         intersect: false,

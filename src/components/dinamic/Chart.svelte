@@ -9,10 +9,13 @@
 
         if (ctx) {
             var gradientStroke = ctx.createLinearGradient(0, 230, 30, 20);
+            // var gradientStroke = ctx.createLinearGradient(200, 330, 100, 20);
             
             gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
             gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
             gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
+            // rgb(37,47,62)
+            //  change background color
             
             const myChart = new Chart(ctx, {
                 type: 'line',
@@ -22,7 +25,7 @@
                     label: 'Precio',
                     tension: 0.4,
                     pointRadius: 0,
-                    data: [12, 19, 13, 8, 12, 13],
+                    data: [8.15, 8.16, 8.5, 8.4, 8.6, 8.5],
                     backgroundColor: gradientStroke,
                     borderColor: "#5e72e4",
                     borderWidth: 3,
@@ -48,10 +51,10 @@
                             ticks: {
                                 display: true,
                                 padding: 10,
-                                color: '#ccc',
+                                color: '#949BA8',
                                 font: {
-                                    size: 11,
-                                    family: "Open Sans",
+                                    size: 15,
+                                    // family: "Open Sans",
                                     style: 'normal',
                                     lineHeight: 2
                                 },
@@ -65,11 +68,11 @@
                             },
                             ticks: {
                                 display: true,
-                                color: '#ccc',
+                                color: '#949BA8',
                                 padding: 20,
                                 font: {
-                                size: 11,
-                                family: "Open Sans",
+                                size: 15,
+                                // family: "Open Sans",
                                 style: 'normal',
                                 lineHeight: 2
                                 },
@@ -79,7 +82,7 @@
                     plugins: {
                         legend: {
                         display: false,
-                        }
+                        },
                     },
                 }
             });

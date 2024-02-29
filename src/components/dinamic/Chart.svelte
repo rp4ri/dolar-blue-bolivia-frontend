@@ -2,24 +2,31 @@
     import { onMount } from 'svelte';
     import Chart from 'chart.js/auto';
 
-    import { collection, getDocs } from 'firebase/firestore';
+    import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
     import { db } from '@utils/firebaseConfig';
 
     let canvasElement: HTMLCanvasElement;
     let prices: number[] = [];
+    let labels: string[] = [];
 
     onMount(async () => {
         console.log("init firebase");
-        const querySnapshot = await getDocs(collection(db, import.meta.env.PUBLIC_FIRESTORE_BINANCE_COLLECTION));
+        const q = query(collection(db, import.meta.env.PUBLIC_FIRESTORE_BINANCE_COLLECTION), orderBy("timestamp", "desc"), limit(10));
+        const querySnapshot = await getDocs(q);
+        let data: number[] = [];
+        let timestamps: string[] = [];
         querySnapshot.forEach((doc) => {
-            prices = doc.data().prices;
-            console.log(prices);
-            console.log(doc.data().timestamp)
-        });
-    });
+            data.push(doc.data().averagePrice);
+            const timestampDate = doc.data().timestamp.toDate();
+            timestamps.push(timestampDate.toLocaleTimeString('es-ES', { hour: '2-digit'}));
 
-    onMount(() => {
-    if (canvasElement) {
+        });
+
+        prices = data.reverse();
+        labels = timestamps.reverse();
+
+        console.log("labels", labels);
+
         const ctx = canvasElement.getContext('2d');
 
         if (ctx) {
@@ -33,12 +40,12 @@
             const myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                labels: labels,
                 datasets: [{
                     label: 'Precio',
                     tension: 0.4,
                     pointRadius: 0,
-                    data: [8.15, 8.16, 8.5, 8.4, 8.6, 8.5],
+                    data: prices,
                     backgroundColor: gradientStroke,
                     borderColor: "#5e72e4",
                     borderWidth: 3,
@@ -100,7 +107,6 @@
                 }
             });
         }
-    }
     });
 </script>
   

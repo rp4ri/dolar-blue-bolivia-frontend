@@ -1,16 +1,16 @@
 ---
-import { Picture } from "astro:assets";
-import heroImage from "assets/hero.png";
-import Link from "@components/ui/link.astro";
-import { Icon } from "astro-icon";
-import SynonymText from '@components/dinamic/SynonymText.svelte';
-
+// import { Picture } from "astro:assets";
+// import heroImage from "assets/hero.png";
+// import Link from "@components/ui/link.astro";
+// import { Icon } from "astro-icon";
+// import SynonymText from '@components/dinamic/SynonymText.svelte';
+import Chart from '@components/dinamic/Chart.svelte';
 ---
 
 <!-- <main
   class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24"> -->
 <main
-  class="relative pt-16 mx-auto text-center lg:w-2/3">
+  class="relative pt-8 mx-auto text-center lg:w-2/3">
   <!-- <div class="py-6 md:order-1 hidden md:block">
     <Picture
       src={heroImage}
@@ -23,11 +23,14 @@ import SynonymText from '@components/dinamic/SynonymText.svelte';
   </div> -->
   <div>
     <h1
-      class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter max-w-4xl">
+      class="text-5xl lg:text-5xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter max-w-4xl my-8">
       🔥 Dolar Blue Bolivia 🔥
     </h1>
-    <p class="text-lg mt-12 text-slate-600 max-w-3xl mx-auto">
-      Hola soy Rodrigo e hice esta página pa trackear las fluctuaciones pa Dante, un saludo pa Dante, feliz cumpleaños Joel, vayan a firmar el revocatongo porfa.
+    
+    <Chart client:only/>
+    
+    <p class="text-lg mt-8 text-slate-600 max-w-3xl mx-auto">
+      Hola soy Rodrigo e hice esta página pa trackear las fluctuaciones del precio del dolar en Bolivia, un saludo pa Dante, feliz cumpleaños Joel, vayan a firmar el revocatongo porfa.
     </p>
     <!-- <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
       <Link

@@ -1,7 +1,22 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import Chart from 'chart.js/auto';
-    let canvasElement: HTMLCanvasElement; // Referencia al elemento canvas
+
+    import { collection, getDocs } from 'firebase/firestore';
+    import { db } from '@utils/firebaseConfig';
+
+    let canvasElement: HTMLCanvasElement;
+    let prices: number[] = [];
+
+    onMount(async () => {
+        console.log("init firebase");
+        const querySnapshot = await getDocs(collection(db, import.meta.env.PUBLIC_FIRESTORE_BINANCE_COLLECTION));
+        querySnapshot.forEach((doc) => {
+            prices = doc.data().prices;
+            console.log(prices);
+            console.log(doc.data().timestamp)
+        });
+    });
 
     onMount(() => {
     if (canvasElement) {
@@ -14,8 +29,6 @@
             gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
             gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
             gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
-            // rgb(37,47,62)
-            //  change background color
             
             const myChart = new Chart(ctx, {
                 type: 'line',

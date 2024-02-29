@@ -10,7 +10,6 @@
     let labels: string[] = [];
 
     onMount(async () => {
-        console.log("init firebase");
         const q = query(collection(db, import.meta.env.PUBLIC_FIRESTORE_BINANCE_COLLECTION), orderBy("timestamp", "desc"), limit(10));
         const querySnapshot = await getDocs(q);
         let data: number[] = [];
@@ -24,8 +23,6 @@
 
         prices = data.reverse();
         labels = timestamps.reverse();
-
-        console.log("labels", labels);
 
         const ctx = canvasElement.getContext('2d');
 

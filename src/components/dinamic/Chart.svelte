@@ -1,33 +1,24 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import Chart from 'chart.js/auto';
+    // import Chart from 'chart.js/auto';
 
     import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
     import { db } from '@utils/firebaseConfig';
 
+    export let prices: number[] = [];
+    export let labels: string[] = [];
+
     let canvasElement: HTMLCanvasElement;
-    let prices: number[] = [];
-    let labels: string[] = [];
+
+    async function loadChartJS() {
+        const module = await import('chart.js/auto');
+        return module.default;
+    }
 
     onMount(async () => {
-        const q = query(collection(db, import.meta.env.PUBLIC_FIRESTORE_BINANCE_COLLECTION), orderBy("timestamp", "desc"), limit(10));
-        const querySnapshot = await getDocs(q);
-        let data: number[] = [];
-        let timestamps: string[] = [];
-        querySnapshot.forEach((doc) => {
-            data.push(doc.data().averagePrice);
-            const timestampDate = doc.data().timestamp.toDate();
-            timestamps.push(timestampDate.toLocaleTimeString('es-ES', { hour: '2-digit'}));
+        const ChartJS = await loadChartJS();
 
-        });
-
-        prices = data.reverse();
-        labels = timestamps.reverse();
-
-        // si es menor que 768 quiero que sea relación de 1:1 si no 1:2
         const aspectRatio = window.innerWidth < 768 ? 1 : 2;
-        // const aspectRatio = window.innerWidth < 768 ? 1 : 2;
-
         const ctx = canvasElement.getContext('2d');
 
         if (ctx) {
@@ -38,7 +29,7 @@
             gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
             gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
             
-            const myChart = new Chart(ctx, {
+            new ChartJS(ctx, {
                 type: 'line',
                 data: {
                 labels: labels,

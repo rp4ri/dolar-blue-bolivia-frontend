@@ -5,9 +5,6 @@
 // import { Icon } from "astro-icon";
 // import SynonymText from '@components/dinamic/SynonymText.svelte';
 import Chart from '@components/dinamic/Chart.svelte';
-import { fetchChartData } from '@utils/fetchChartData';
-
-const { prices, labels } = await fetchChartData('hourly');
 ---
 
 <!-- <main
@@ -37,7 +34,7 @@ const { prices, labels } = await fetchChartData('hourly');
       </div>
     </div>
     
-    <Chart {prices} {labels} client:only/>
+    <Chart client:only/>
     
     <p class="text-lg mt-8 text-[#949BA8] max-w-3xl mx-auto">
       Hola soy Rodrigo. Estoy guardando los precios del dolar en el mercado negro de Bolivia dentro de un firestore. Mientras la economía se deteriora todo lo que puedo hacer es codear así que acá les dejo una chart hecha con Astro y Svelte. Estará en horas hasta que recopile más datos.

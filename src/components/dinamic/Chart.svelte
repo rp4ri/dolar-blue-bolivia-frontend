@@ -1,43 +1,52 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    // import Chart from 'chart.js/auto';
+    import { onMount, onDestroy } from 'svelte';
+    import { writable, get } from 'svelte/store';
 
-    import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
-    import { db } from '@utils/firebaseConfig';
+    import { fetchChartData } from '@utils/fetchChartData';
 
-    export let prices: number[] = [];
-    export let labels: string[] = [];
+    let chartInstance;
+    const prices = writable<number[]>([]);
+    const labels = writable<string[]>([]);
+    let canvasElement;
 
-    let canvasElement: HTMLCanvasElement;
+    async function loadChartData(temporality) {
+        const { prices: newPrices, labels: newLabels } = await fetchChartData(temporality);
+        prices.set(newPrices);
+        labels.set(newLabels);
+        updateChart();
+    }
 
     async function loadChartJS() {
         const module = await import('chart.js/auto');
         return module.default;
     }
 
-    onMount(async () => {
-        const ChartJS = await loadChartJS();
+    async function updateChart() {
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
 
-        const aspectRatio = window.innerWidth < 768 ? 1 : 2;
+        const Chart = await loadChartJS();
         const ctx = canvasElement.getContext('2d');
 
-        if (ctx) {
-            var gradientStroke = ctx.createLinearGradient(0, 230, 30, 20);
-            // var gradientStroke = ctx.createLinearGradient(200, 330, 100, 20);
+
+        const aspectRatio = window.innerWidth < 768 ? 1 : 2;
+
+        const gradientStroke = ctx.createLinearGradient(0, 230, 30, 20);
             
-            gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-            gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-            gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
-            
-            new ChartJS(ctx, {
+        gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+        gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+        gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
+
+        chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                labels: labels,
+                labels: get(labels),
                 datasets: [{
                     label: 'Precio',
                     tension: 0.4,
                     pointRadius: 0,
-                    data: prices,
+                    data: get(prices),
                     backgroundColor: gradientStroke,
                     borderColor: "#5e72e4",
                     borderWidth: 3,
@@ -99,9 +108,21 @@
                 }
             });
         }
+
+    onMount(() => {
+        loadChartData('hourly');
+    });
+
+    onDestroy(() => {
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
     });
 </script>
   
 <div class="relative h-100">
     <canvas bind:this={canvasElement}></canvas>
 </div>
+
+<button on:click={() => loadChartData('hourly')}>Hourly</button>
+<button on:click={() => loadChartData('daily')}>Daily</button>

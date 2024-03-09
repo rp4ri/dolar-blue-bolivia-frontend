@@ -1,13 +1,18 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
     import { writable, get } from 'svelte/store';
-
     import { fetchChartData } from '@utils/fetchChartData';
+    import TemporalitySwitch from './TemporalitySwitch.svelte';
 
     let chartInstance;
     const prices = writable<number[]>([]);
     const labels = writable<string[]>([]);
     let canvasElement;
+
+    function handleTemporalityChange(event) {
+        const temporality = event.detail;
+        loadChartData(temporality);
+    }
 
     async function loadChartData(temporality) {
         const { prices: newPrices, labels: newLabels } = await fetchChartData(temporality);
@@ -16,24 +21,16 @@
         updateChart();
     }
 
-    async function loadChartJS() {
-        const module = await import('chart.js/auto');
-        return module.default;
-    }
-
     async function updateChart() {
         if (chartInstance) {
             chartInstance.destroy();
         }
 
-        const Chart = await loadChartJS();
+        const Chart = (await import('chart.js/auto')).default;
         const ctx = canvasElement.getContext('2d');
-
-
         const aspectRatio = window.innerWidth < 768 ? 1 : 2;
-
         const gradientStroke = ctx.createLinearGradient(0, 230, 30, 20);
-            
+
         gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
         gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
         gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
@@ -109,7 +106,7 @@
             });
         }
 
-    onMount(() => {
+        onMount(() => {
         loadChartData('hourly');
     });
 
@@ -119,10 +116,11 @@
         }
     });
 </script>
-  
+
 <div class="relative h-100">
     <canvas bind:this={canvasElement}></canvas>
 </div>
-
-<button on:click={() => loadChartData('hourly')}>Hourly</button>
-<button on:click={() => loadChartData('daily')}>Daily</button>
+<div class="flex items-center justify-center">
+    <div class="font-bold text-opacity-85 mr-4">Temporalidad:</div>
+    <TemporalitySwitch on:change={handleTemporalityChange} />
+</div>

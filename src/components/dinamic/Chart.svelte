@@ -11,6 +11,9 @@
 
     const isLoading = writable(true);
 
+    let currentPrice = 0;
+    let officialDollarGap = 0;
+
     function handleTemporalityChange(event) {
         const temporality = event.detail;
         loadChartData(temporality);
@@ -22,6 +25,19 @@
         labels.set(newLabels);
         isLoading.set(false);
         updateChart(newPrices, newLabels);
+
+        if (temporality === 'hourly') {
+            updateCurrentPrice(newPrices);
+        }
+    }
+
+    function updateCurrentPrice(newPrices) {
+        currentPrice = newPrices[newPrices.length - 1];
+        calculateOfficialDollarGap();
+    }
+    function calculateOfficialDollarGap() {
+        const officialDollarPrice = 6.96;
+        officialDollarGap = ((currentPrice - officialDollarPrice) / officialDollarPrice) * 100;
     }
 
     async function updateChart(newPrices, newLabels) {
@@ -131,6 +147,10 @@
 <div class="flex items-center justify-center">
     <div class="font-bold [#FFF]/55 mr-4">Temporalidad:</div>
     <TemporalitySwitch on:change={handleTemporalityChange} />
+</div>
+<div class="flex items-center justify-center mt-4">
+    <div class="font-bold text-[#FFF]/55 mx-4">Precio actual del dólar: <span class="text-[#FFF]/85">{currentPrice.toFixed(2)}</span></div>
+    <div class="font-bold text-[#FFF]/55 mx-4">Brecha con el dólar oficial: <span class="text-[#FFF]/85">{officialDollarGap.toFixed(2)}%</span></div>
 </div>
 
 <style>

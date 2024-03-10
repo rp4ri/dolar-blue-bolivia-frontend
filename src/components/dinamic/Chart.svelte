@@ -21,10 +21,10 @@
         prices.set(newPrices);
         labels.set(newLabels);
         isLoading.set(false);
-        updateChart();
+        updateChart(newPrices, newLabels);
     }
 
-    async function updateChart() {
+    async function updateChart(newPrices, newLabels) {
         if (chartInstance) {
             chartInstance.destroy();
         }
@@ -41,12 +41,12 @@
         chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                labels: get(labels),
+                labels: newLabels,
                 datasets: [{
                     label: 'Precio',
                     tension: 0.4,
                     pointRadius: 0,
-                    data: get(prices),
+                    data: newPrices,
                     backgroundColor: gradientStroke,
                     borderColor: "#5e72e4",
                     borderWidth: 3,

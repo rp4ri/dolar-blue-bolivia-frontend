@@ -30,6 +30,6 @@
 
 <style lang="postcss">
   .selected {
-    @apply bg-midnight-300;
+    @apply bg-midnight-100;
   }
 </style>

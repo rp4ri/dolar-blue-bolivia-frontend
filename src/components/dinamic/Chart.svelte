@@ -9,6 +9,8 @@
     const labels = writable<string[]>([]);
     let canvasElement;
 
+    const isLoading = writable(true);
+
     function handleTemporalityChange(event) {
         const temporality = event.detail;
         loadChartData(temporality);
@@ -18,6 +20,7 @@
         const { prices: newPrices, labels: newLabels } = await fetchChartData(temporality);
         prices.set(newPrices);
         labels.set(newLabels);
+        isLoading.set(false);
         updateChart();
     }
 
@@ -117,10 +120,24 @@
     });
 </script>
 
-<div class="relative h-100">
-    <canvas bind:this={canvasElement}></canvas>
-</div>
+{#if $isLoading}
+    <div class="loading-indicator">🔥 espera...</div>
+{:else}
+    <div class="relative h-100" style="height: 400px; width: 100%;">
+        <canvas bind:this={canvasElement}></canvas>
+    </div>
+{/if}
+
 <div class="flex items-center justify-center">
     <div class="font-bold [#FFF]/55 mr-4">Temporalidad:</div>
     <TemporalitySwitch on:change={handleTemporalityChange} />
 </div>
+
+<style>
+    .loading-indicator {
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

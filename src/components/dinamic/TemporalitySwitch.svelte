@@ -28,7 +28,7 @@
   </span>
 </label>
 
-<style>
+<style lang="postcss">
   .selected {
     @apply bg-midnight-300;
   }

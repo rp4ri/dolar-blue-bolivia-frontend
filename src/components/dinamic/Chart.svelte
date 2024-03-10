@@ -121,6 +121,6 @@
     <canvas bind:this={canvasElement}></canvas>
 </div>
 <div class="flex items-center justify-center">
-    <div class="font-bold text-opacity-85 mr-4">Temporalidad:</div>
+    <div class="font-bold [#FFF]/55 mr-4">Temporalidad:</div>
     <TemporalitySwitch on:change={handleTemporalityChange} />
 </div>

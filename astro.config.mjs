@@ -7,7 +7,7 @@ import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://github.com/rp4ri",
+  site: "https://dolarbluebolivia.lat/",
   integrations: [tailwind(), mdx(), sitemap(), svelte(),
     partytown({
       config: {

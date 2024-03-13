@@ -149,8 +149,8 @@
     <TemporalitySwitch on:change={handleTemporalityChange} />
 </div>
 <div class="flex items-center justify-center mt-4">
-    <div class="font-bold text-[#FFF]/55 mx-4">Precio actual del dólar: <span class="text-[#FFF]/85">{currentPrice.toFixed(2)}</span></div>
-    <div class="font-bold text-[#FFF]/55 mx-4">Brecha con el dólar oficial: <span class="text-[#FFF]/85">{officialDollarGap.toFixed(2)}%</span></div>
+    <div class="font-bold text-[#FFF]/60 mx-4">Precio actual del dólar: <span class="text-[#FFF]/85">{currentPrice.toFixed(2)}</span></div>
+    <div class="font-bold text-[#FFF]/60 mx-4">Brecha con el dólar oficial: <span class="text-[#FFF]/85">{officialDollarGap.toFixed(2)}%</span></div>
 </div>
 
 <style>

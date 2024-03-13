@@ -19,11 +19,11 @@
     on:change={handleCheckboxChange}
     bind:checked={isChecked} />
   <span
-  class={`dark text-body-color flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${!isChecked ? 'selected' : ''}`}>
+  class={`text-[#FFF]/85 dark text-body-color flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${!isChecked ? 'selected' : ''}`}>
     1H
   </span>
   <span
-  class={`light text-primary bg-gray dark:bg-dark-3 flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${isChecked ? 'selected' : ''}`}>
+  class={`text-[#FFF]/85 light text-primary bg-gray dark:bg-dark-3 flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${isChecked ? 'selected' : ''}`}>
     1D
   </span>
 </label>

@@ -132,9 +132,7 @@
         await tick();
 
         if (canvasElement) {
-            console.log("1")
             ctx = canvasElement.getContext('2d');
-            console.log("2")
             gradientStroke = ctx.createLinearGradient(0, 230, 30, 20);
             gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
             gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');

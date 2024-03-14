@@ -4,7 +4,7 @@ import { db } from '@utils/firebaseConfig';
 export async function fetchChartData(temporality: string) {
     // const collectionName = temporality === 'daily' ? import.meta.env.PUBLIC_FIRESTORE_DAILY_SELL_COLLECTION : import.meta.env.PUBLIC_FIRESTORE_HOURLY_SELL_COLLECTION;
     const collectionName = temporality === 'daily' ? import.meta.env.PUBLIC_FIRESTORE_BINANCE_END_OF_THE_DAY_COLLECTION : import.meta.env.PUBLIC_FIRESTORE_BINANCE_COLLECTION;
-    console.log('collectionName', collectionName)
+    // console.log('collectionName', collectionName)
     const q = query(collection(db, collectionName), orderBy("timestamp", "desc"), limit(10));
 
     const querySnapshot = await getDocs(q);
@@ -17,8 +17,8 @@ export async function fetchChartData(temporality: string) {
         timestamps.push(timestampDateToLocaleString);
     });
 
-    console.log('data', data);
-    console.log('timestamps', timestamps);
+    // console.log('data', data);
+    // console.log('timestamps', timestamps);
 
     return {
         prices: data.reverse(),

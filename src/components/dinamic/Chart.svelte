@@ -18,6 +18,23 @@
     let currentPrice = 0;
     let officialDollarGap = 0;
 
+    function setupCanvas() {
+        if (canvasElement) {
+            ctx = canvasElement.getContext('2d');
+            gradientStroke = ctx.createLinearGradient(0, 230, 30, 20);
+            gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+            gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+            gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
+
+            // console.log('Canvas setup')
+            const currentPrices = get(prices);
+            const currentLabels = get(labels);
+            updateChart(currentPrices, currentLabels);
+        } else {
+            console.error('El elemento canvas no está disponible.');
+        }
+    }
+
     function handleTemporalityChange(event) {
         const temporality = event.detail;
         loadChartData(temporality);
@@ -128,19 +145,10 @@
             }
         }
     
-    onMount(async () => {
-        await tick();
-
-        if (canvasElement) {
-            ctx = canvasElement.getContext('2d');
-            gradientStroke = ctx.createLinearGradient(0, 230, 30, 20);
-            gradientStroke.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-            gradientStroke.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-            gradientStroke.addColorStop(0, 'rgba(94, 114, 228, 0)');
-            await loadChartData('hourly');
-        } else {
-            console.error('El elemento canvas no está disponible.');
-        }
+    onMount(() => {
+        loadChartData('hourly').then(() => {
+            setupCanvas();
+        });
     });
 
     onDestroy(() => {
@@ -151,14 +159,14 @@
 </script>
 
 {#if $isLoading}
-    <div class="loading-indicator">🔥 espera...</div>
+    <div class="loading-indicator relative h-100 center" style="height: 400px;">🔥 espera...</div>
+{:else}
+    <div class="relative h-100 center" style="height: 400px;">
+        <canvas bind:this={canvasElement}></canvas>
+    </div>
 {/if}
 
-<div class="relative h-100" style="height: 400px; width: 100%;">
-    <canvas bind:this={canvasElement}></canvas>
-</div>
-
-<div class="flex items-center justify-center">
+<div class="flex items-center justify-center max-md:-mt-6">
     <div class="font-bold [#FFF]/55 mr-4">Temporalidad:</div>
     <TemporalitySwitch on:change={handleTemporalityChange} />
 </div>

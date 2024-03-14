@@ -1,0 +1,84 @@
+---
+import Link from "@components/ui/link.astro";
+---
+
+<main
+  class="relative pt-8 mx-auto text-center lg:w-2/3">
+  <div>
+    <div class="flex items-start justify-center max-w-4xl my-8">
+      <div class="emoji text-5xl lg:text-5xl xl:text-7xl xl:mx-4">
+        🔥
+      </div>
+      <h1 class="text-[#FFF]/85 text-5xl lg:text-5xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
+        Dolar Blue Bolivia
+      </h1>
+      <div class="emoji text-5xl lg:text-5xl xl:text-7xl xl:mx-4">
+        🔥
+      </div>
+    </div>
+  </div>
+
+  <div> 
+    <p class="text-xl my-16 text-[#FFF]/60 max-w-3xl mx-auto">
+      Podés volver al home haciendo <a
+                    href="/"
+                    rel="noopener"
+                    aria-label="Forkea esto en mi GitHub"
+                    class="underline text-[#FFF]/85">
+                    click acá.</a>
+    </p>
+  </div>
+
+  <div> 
+    <p class="text-lg mt-8 text-[#FFF]/60 max-w-3xl mx-auto">
+      Hola, esta es una web que me armé una noche que no podía dormir, quiero usar esta sección para explicar los detalles técnicos de la página y para dejar un registro de las actualizaciones que le haga a la web.
+    </p>
+  </div>
+
+  <div> 
+    <p class="text-lg mt-8 text-[#FFF]/60 max-w-3xl mx-auto">
+      <strong><span class="text-[#FFF]">¿De dónde saco los datos?</span></strong> De momento la única manera que encontré de automatizar la actualización de precios es tomando los datos de las páginas de p2p de dolares, mis datos vienen de un AWS Lambda que se ejecuta cada hora y guarda una muestra de precios en un Firestore, el lambda toma la muestra que se recolectó a esa hora y calcula el promedio, el cual asumo que logra representar el consenso del precio del dolar en el colectivo de las personas que están vendiendo y comprando dolares, de esta manera, cada precio que ves en la chart es el promedio del precio al cual estan vendiendo el dolar distintas personas en el momento que se ejecutó la función.
+    </p>
+  </div>
+
+  <div> 
+    <p class="text-lg mt-8 text-[#FFF]/60 max-w-3xl mx-auto">
+      <strong><span class="text-[#FFF]">¿Qué tan preciso es este método?</span></strong> Si consultas a distintos librecambistas, es probable que encuentres una variación con el precio que te muestro en esta web (e incluso entre ellos mismos). Esto se debe a que el precio del dolar en un mercado paralelo esta sujeto a la dinámica de la oferta y la demanda, en situaciones de inestabilidad económica y desconfianza en la moneda local, la demanda de dolares suele aumentar mientras la oferta se mantiene constante o disminuye por las regulaciones gubernamentales. El dolar paralelo refleja la percepción de riesgo económico y la demanda real de divisas en el mercado, los datos que muestro en esta web no fueron manipulados de ninguna manera, el método que uso, aunque no exento de variaciones, busca ofrecer una aproximación al consenso del mercado sobre el valor del dólar en el entorno económico boliviano.
+    </p>
+  </div>
+
+  <div> 
+    <p class="text-lg mt-8 text-[#FFF]/60 max-w-3xl mx-auto">
+      <strong><span class="text-[#FFF]">Quisiera que este sea un proyecto de código abierto.</span></strong> Desde la actualización del 10 de marzo mi repo del front está público en mi github y cualquiera puede ir a forkearlo, el código de mis funciones lambda no está disponible aún porque no revisé si hay información que debería mantener privada.
+    </p>
+  </div>
+
+  <div> 
+    <p class="text-xl my-16 text-[#FFF]/85 max-w-3xl mx-auto">
+      <strong>Historial de actualizaciones.</strong>
+    </p>
+  </div>
+
+  <div>
+    <p class="text-lg mt-16 text-[#FFF]/60 max-w-3xl mx-auto">
+        <span class="text-[#FFF]">✨</span> <span class="text-[#FFF]/85">Actualización 10 de marzo: </span>Hola de nuevo, la web ya lleva existiendo 10 días, esto significa que ya tengo datos suficientes para meter la feature de temporalidad, ahora podés elegir si querés ver el precio por hora o por día. Como detalle, estoy dejando el repositorio del front público en mi <a
+              href="https://github.com/rp4ri"
+              target="_blank"
+              rel="noopener"
+              aria-label="Forkea esto en mi GitHub"
+              class="hover:underline text-[#FFF]/85">
+              perfil de github</a> (es solo una plantilla de astro que edité kkk), de momento dejaré mis lambda functions privadas porque no revisé a fondo si estoy versionando información sensible, si alguien lee esto dele una refactorizada al code en mi repo.
+      </p>
+  </div>
+
+  <div class="mt-8 flex sm:flex-row gap-3 justify-center max-w-64 m-auto">
+      <Link
+        size="lg"
+        style="primary"
+        rel="noopener"
+        href="/"
+        class="flex gap-1 items-center justify-center">
+          Quiero volver al home
+      </Link>
+    </div>
+</main>

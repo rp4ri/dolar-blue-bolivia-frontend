@@ -159,14 +159,14 @@
 </script>
 
 {#if $isLoading}
-    <div class="loading-indicator relative h-100 center" style="height: 450px;">🔥 espera...</div>
+    <div class="loading-indicator relative h-100 center max-md:-mt-16" style="min-height: 450px;">🔥 espera...</div>
 {:else}
-    <div class="flex items-center justify-center" style="height: 450px;">
-        <canvas bind:this={canvasElement}></canvas>
+    <div class="flex items-center justify-center max-md:-mt-16" style="min-height: 450px;">
+        <canvas bind:this={canvasElement} style="width: 100%; height: 100%;"></canvas>
     </div>
 {/if}
 
-<div class="flex items-center justify-center max-md:-mt-6">
+<div class="flex items-center justify-center max-md:-mt-10">
     <div class="font-bold [#FFF]/55 mr-4">Temporalidad:</div>
     <TemporalitySwitch on:change={handleTemporalityChange} />
 </div>
@@ -177,7 +177,7 @@
 
 <style>
     .loading-indicator {
-        height: 400px;
+        /* height: 400px; */
         display: flex;
         align-items: center;
         justify-content: center;

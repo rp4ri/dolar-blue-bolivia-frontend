@@ -159,9 +159,9 @@
 </script>
 
 {#if $isLoading}
-    <div class="loading-indicator relative h-100 center" style="height: 400px;">🔥 espera...</div>
+    <div class="loading-indicator relative h-100 center" style="height: 450px;">🔥 espera...</div>
 {:else}
-    <div class="relative h-100 center" style="height: 400px;">
+    <div class="flex items-center justify-center" style="height: 450px;">
         <canvas bind:this={canvasElement}></canvas>
     </div>
 {/if}
